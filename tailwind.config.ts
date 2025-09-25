@@ -47,6 +47,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Ocean-themed color extensions
+        ocean: {
+          deep: "hsl(var(--ocean-deep))",
+          medium: "hsl(var(--ocean-medium))",
+          light: "hsl(var(--ocean-light))",
+          surface: "hsl(var(--ocean-surface))",
+        },
+        teal: {
+          accent: "hsl(var(--teal-accent))",
+        },
+        aqua: {
+          glow: "hsl(var(--aqua-glow))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,6 +75,16 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        'gradient-ocean': 'var(--gradient-ocean)',
+        'gradient-surface': 'var(--gradient-surface)',
+        'gradient-depth': 'var(--gradient-depth)',
+      },
+      boxShadow: {
+        'ocean': 'var(--shadow-ocean)',
+        'depth': 'var(--shadow-depth)',
+        'surface': 'var(--shadow-surface)',
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +103,41 @@ export default {
             height: "0",
           },
         },
+        "wave": {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-4px)",
+          },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "wave": "wave 2s ease-in-out infinite",
+        "fade-in": "fade-in 0.3s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
       },
     },
   },
