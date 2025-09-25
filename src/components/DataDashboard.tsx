@@ -10,9 +10,9 @@ const DataDashboard = () => {
   const tabs = [
     { 
       id: "map", 
-      label: "Map View", 
+      label: "Recent Insights", 
       icon: Globe,
-      description: "Global Argo float positions and data coverage"
+      description: "Latest oceanographic discoveries and data insights"
     },
     { 
       id: "profiles", 
@@ -63,56 +63,133 @@ const DataDashboard = () => {
             ))}
           </TabsList>
 
-          {/* Map View Tab */}
+          {/* Recent Insights Tab */}
           <TabsContent value="map" className="mt-6 space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Latest Discoveries */}
+              <Card className="p-6 shadow-ocean">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Globe className="h-5 w-5 text-ocean-medium" />
+                  <h3 className="text-lg font-semibold">Latest Discoveries</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="p-4 bg-ocean-surface/50 rounded-lg border border-ocean-light/20">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-semibold text-ocean-deep">Unusual Temperature Anomaly</h4>
+                      <span className="text-xs text-muted-foreground">2 hours ago</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Float WMO-6903274 detected +2.3°C anomaly in North Atlantic at 800m depth
+                    </p>
+                    <div className="text-xs text-ocean-medium">Location: 45.2°N, 42.1°W</div>
+                  </div>
+                  
+                  <div className="p-4 bg-ocean-surface/50 rounded-lg border border-ocean-light/20">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-semibold text-ocean-deep">Deep Water Formation Event</h4>
+                      <span className="text-xs text-muted-foreground">5 hours ago</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Significant salinity increase detected in Labrador Sea indicating active convection
+                    </p>
+                    <div className="text-xs text-ocean-medium">16 floats involved</div>
+                  </div>
+
+                  <div className="p-4 bg-ocean-surface/50 rounded-lg border border-ocean-light/20">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-semibold text-ocean-deep">Marine Heatwave Alert</h4>
+                      <span className="text-xs text-muted-foreground">1 day ago</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Persistent surface warming in Eastern Pacific exceeding 95th percentile
+                    </p>
+                    <div className="text-xs text-ocean-medium">Severity: Moderate</div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Real-time Statistics */}
+              <Card className="p-6 shadow-ocean">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Activity className="h-5 w-5 text-ocean-medium" />
+                  <h3 className="text-lg font-semibold">Live Ocean Data</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="text-center p-4 bg-gradient-depth rounded-lg">
+                    <div className="text-2xl font-bold text-primary-foreground">3,847</div>
+                    <div className="text-sm text-primary-foreground/80">Active Floats</div>
+                  </div>
+                  <div className="text-center p-4 bg-gradient-depth rounded-lg">
+                    <div className="text-2xl font-bold text-primary-foreground">127,439</div>
+                    <div className="text-sm text-primary-foreground/80">Profiles Today</div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-ocean-surface/30 rounded">
+                    <span className="text-sm font-medium">Data Quality</span>
+                    <span className="text-sm text-ocean-deep font-semibold">98.2%</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-ocean-surface/30 rounded">
+                    <span className="text-sm font-medium">New Deployments</span>
+                    <span className="text-sm text-ocean-deep font-semibold">23 this week</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-ocean-surface/30 rounded">
+                    <span className="text-sm font-medium">Coverage Area</span>
+                    <span className="text-sm text-ocean-deep font-semibold">89% of oceans</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-ocean-surface/30 rounded">
+                    <span className="text-sm font-medium">Processing Lag</span>
+                    <span className="text-sm text-ocean-deep font-semibold">4.2 hours</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Recent Analysis Results */}
             <Card className="p-6 shadow-ocean">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
-                  <Map className="h-5 w-5 text-ocean-medium" />
-                  <h3 className="text-lg font-semibold">Global Ocean Coverage</h3>
+                  <BarChart3 className="h-5 w-5 text-ocean-medium" />
+                  <h3 className="text-lg font-semibold">Recent Analysis Results</h3>
                 </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <div className="w-3 h-3 bg-ocean-medium rounded-full"></div>
-                  <span>Active Floats: 3,847</span>
-                </div>
+                <Button variant="outline" size="sm">View All Reports</Button>
               </div>
               
-              {/* Map Placeholder */}
-              <div 
-                id="leaflet-map-container"
-                className="w-full h-96 bg-gradient-depth rounded-lg border border-border/20 flex items-center justify-center shadow-depth"
-              >
-                <div className="text-center space-y-4">
-                  <Globe className="h-16 w-16 text-ocean-light mx-auto animate-wave" />
-                  <div>
-                    <h4 className="text-xl font-semibold text-primary-foreground">Interactive World Map</h4>
-                    <p className="text-primary-foreground/80">Leaflet map will be embedded here</p>
-                    <p className="text-sm text-primary-foreground/60 mt-2">
-                      Float positions • Ocean basins • Data coverage
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-gradient-surface rounded-lg border border-border/20">
+                  <div className="text-center">
+                    <TrendingUp className="h-8 w-8 text-ocean-medium mx-auto mb-2" />
+                    <h4 className="font-semibold mb-1">Arctic Sea Ice Analysis</h4>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      15% below 2010-2020 average
                     </p>
+                    <div className="text-xs text-ocean-medium">Updated 6 hours ago</div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="p-4 bg-ocean-surface border-ocean-light/20">
+                <div className="p-4 bg-gradient-surface rounded-lg border border-border/20">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-ocean-deep">3,847</div>
-                    <div className="text-sm text-ocean-medium">Active Floats</div>
+                    <Globe className="h-8 w-8 text-ocean-medium mx-auto mb-2" />
+                    <h4 className="font-semibold mb-1">Gulf Stream Monitoring</h4>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Transport rate: 18.2 ± 2.1 Sv
+                    </p>
+                    <div className="text-xs text-ocean-medium">Updated 3 hours ago</div>
                   </div>
-                </Card>
-                <Card className="p-4 bg-ocean-surface border-ocean-light/20">
+                </div>
+
+                <div className="p-4 bg-gradient-surface rounded-lg border border-border/20">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-ocean-deep">127,439</div>
-                    <div className="text-sm text-ocean-medium">Profiles Today</div>
+                    <Activity className="h-8 w-8 text-ocean-medium mx-auto mb-2" />
+                    <h4 className="font-semibold mb-1">pH Trend Analysis</h4>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      -0.02 units/decade decline
+                    </p>
+                    <div className="text-xs text-ocean-medium">Updated 1 hour ago</div>
                   </div>
-                </Card>
-                <Card className="p-4 bg-ocean-surface border-ocean-light/20">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-ocean-deep">98.2%</div>
-                    <div className="text-sm text-ocean-medium">Data Quality</div>
-                  </div>
-                </Card>
+                </div>
               </div>
             </Card>
           </TabsContent>
