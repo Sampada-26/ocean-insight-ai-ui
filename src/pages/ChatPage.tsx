@@ -17,6 +17,7 @@ import {
   Activity
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import MessageContent from "@/components/MessageContent";
 
 interface Message {
   id: string;
@@ -62,7 +63,22 @@ const ChatPage = () => {
     {
       id: '1',
       type: 'assistant',
-      content: 'Hello! I\'m your Ocean Insight AI assistant. Ask me about ocean data, request comparisons, or get statistical information about any ocean region. What would you like to explore?',
+      content: `# 👋 Welcome to Ocean Insight AI!
+
+I'm your dedicated oceanographic data assistant, ready to help you explore the vast world of ocean data and marine insights.
+
+## 🚀 What I Can Do:
+- **Real-time Ocean Data**: Get current statistics for any ocean region
+- **Interactive Visualizations**: Generate charts, graphs, and maps
+- **Comparative Analysis**: Compare multiple oceans side-by-side
+- **Marine Life Information**: Explore biodiversity and ecosystem data
+- **Climate Insights**: Understand ocean-climate relationships
+- **Environmental Monitoring**: Track pollution and conservation status
+
+## 💬 How to Get Started:
+Simply type your question or click one of the suggestions below. I understand natural language, so feel free to ask in your own words!
+
+**Ready to dive in?** 🌊`,
       timestamp: new Date(),
     }
   ]);
@@ -428,7 +444,43 @@ const ChatPage = () => {
           assistantMessage = {
             id: (Date.now() + 1).toString(),
             type: 'assistant',
-            content: 'I can help you with comprehensive ocean data analysis! Try asking about:\n\n🌊 **Ocean Data**: "Show me data of Indian Ocean", "Tell me about Pacific Ocean", "Bay of Bengal information"\n\n📊 **Comparisons**: "Compare Indian Ocean with Arabian Sea", "Compare Pacific and Atlantic Ocean"\n\n🐠 **Marine Life**: "Tell me about marine life", "What species live in oceans?"\n\n🌡️ **Climate**: "How do oceans affect climate?", "Show me temperature trends"\n\n🌍 **Environment**: "Ocean pollution levels", "Environmental status of oceans"\n\nI\'ll provide detailed statistics, trends, and visualizations for any ocean topic!',
+            content: `# 🌊 Ocean Insight AI Assistant
+
+I can help you with comprehensive ocean data analysis and research! Here's what you can explore:
+
+## 📊 **Data Categories**
+
+### 🌊 Ocean Data & Statistics
+- *"Show me data of Indian Ocean"*
+- *"Tell me about Pacific Ocean temperature"*
+- *"Bay of Bengal salinity information"*
+- *"Caribbean Sea measurements"*
+
+### � Comparative Analysis
+- *"Compare Indian Ocean with Arabian Sea"*
+- *"Pacific vs Atlantic Ocean differences"*
+- *"Temperature comparison across oceans"*
+
+### 🐠 Marine Ecosystem
+- *"Tell me about marine life in Pacific"*
+- *"What species live in deep oceans?"*
+- *"Coral reef biodiversity"*
+
+### 🌡️ Climate & Weather
+- *"How do oceans affect global climate?"*
+- *"Show me temperature trends over time"*
+- *"Ocean current patterns"*
+
+### 🌍 Environmental Impact
+- *"Ocean pollution levels by region"*
+- *"Environmental status of coral reefs"*
+- *"Climate change effects on oceans"*
+
+---
+
+**💡 Pro Tip:** I provide detailed statistics, interactive visualizations, and real-time data analysis for any ocean-related topic!
+
+**🚀 Ready to explore?** Just ask me anything about oceans, and I'll provide comprehensive insights with data visualizations.`,
             timestamp: new Date(),
           };
         }
@@ -503,7 +555,11 @@ const ChatPage = () => {
                   {/* Content */}
                   <div className="flex-1 space-y-4">
                     <div className={`prose max-w-none ${message.type === 'user' ? 'text-right' : ''}`}>
-                      <p className="text-gray-800 leading-relaxed">{message.content}</p>
+                      {message.type === 'user' ? (
+                        <p className="text-gray-800 leading-relaxed">{message.content}</p>
+                      ) : (
+                        <MessageContent content={message.content} />
+                      )}
                     </div>
 
                     {/* Ocean Data Display */}
@@ -530,6 +586,68 @@ const ChatPage = () => {
               </div>
             </div>
           ))}
+
+          {/* Quick Suggestions */}
+          {messages.length <= 2 && !isLoading && (
+            <div className="mb-8">
+              <div className="flex justify-start">
+                <div className="max-w-3xl w-full">
+                  <div className="mb-4">
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">💡 Quick Examples:</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="justify-start text-left h-auto p-3 hover:bg-blue-50"
+                        onClick={() => setInputValue("Show me data of Indian Ocean")}
+                      >
+                        <div>
+                          <div className="font-medium text-sm">🌊 Indian Ocean Data</div>
+                          <div className="text-xs text-gray-500">Temperature, salinity & trends</div>
+                        </div>
+                      </Button>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="justify-start text-left h-auto p-3 hover:bg-green-50"
+                        onClick={() => setInputValue("Compare Pacific and Atlantic Ocean")}
+                      >
+                        <div>
+                          <div className="font-medium text-sm">📊 Ocean Comparison</div>
+                          <div className="text-xs text-gray-500">Side-by-side analysis</div>
+                        </div>
+                      </Button>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="justify-start text-left h-auto p-3 hover:bg-purple-50"
+                        onClick={() => setInputValue("Tell me about marine life in Caribbean Sea")}
+                      >
+                        <div>
+                          <div className="font-medium text-sm">🐠 Marine Ecosystem</div>
+                          <div className="text-xs text-gray-500">Species & biodiversity</div>
+                        </div>
+                      </Button>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="justify-start text-left h-auto p-3 hover:bg-orange-50"
+                        onClick={() => setInputValue("Show Caribbean Sea measurements")}
+                      >
+                        <div>
+                          <div className="font-medium text-sm">📈 Caribbean Data</div>
+                          <div className="text-xs text-gray-500">Pressure & temperature</div>
+                        </div>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           
           {isLoading && (
             <div className="mb-8">

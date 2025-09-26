@@ -31,6 +31,15 @@ export interface OceanInfo {
   change?: number;
 }
 
+export interface OceanMeasurement {
+  latitude: number;
+  longitude: number;
+  pressureMin: number;
+  pressureMax: number;
+  pressureCount: number;
+  temperature: number;
+}
+
 export const SAMPLE_OCEAN_DATA: OceanInfo[] = [
   {
     id: '1',
@@ -239,3 +248,159 @@ export const CLIMATE_PATTERNS = {
     currents: 'Gulf Stream, Labrador Current, Brazil Current'
   }
 };
+
+// Ocean Measurement Data - Caribbean/Atlantic Region
+export const OCEAN_MEASUREMENTS: OceanMeasurement[] = [
+  {
+    latitude: 16.61493683,
+    longitude: -67.30243683,
+    pressureMin: 0.4,
+    pressureMax: 2022.3,
+    pressureCount: 1024,
+    temperature: 11.46
+  },
+  {
+    latitude: 16.64294052,
+    longitude: -67.29470825,
+    pressureMin: 0.3,
+    pressureMax: 1839.4,
+    pressureCount: 981,
+    temperature: 11.656
+  },
+  {
+    latitude: 16.68493652,
+    longitude: -67.28493499,
+    pressureMin: 0.4,
+    pressureMax: 1940.9,
+    pressureCount: 982,
+    temperature: 11.41
+  },
+  {
+    latitude: 16.73183060,
+    longitude: -67.28099823,
+    pressureMin: 0.4,
+    pressureMax: 1919.6,
+    pressureCount: 990,
+    temperature: 11.531
+  },
+  {
+    latitude: 16.78118705,
+    longitude: -67.27290344,
+    pressureMin: 0.3,
+    pressureMax: 1900.1,
+    pressureCount: 978,
+    temperature: 11.552
+  },
+  {
+    latitude: 16.87450981,
+    longitude: -67.25473785,
+    pressureMin: 0.4,
+    pressureMax: 2016.7,
+    pressureCount: 1020,
+    temperature: 11.686
+  },
+  {
+    latitude: 16.97711181,
+    longitude: -67.25085449,
+    pressureMin: 0.4,
+    pressureMax: 1996.7,
+    pressureCount: 1004,
+    temperature: 11.588
+  },
+  {
+    latitude: 17.07415199,
+    longitude: -67.24897003,
+    pressureMin: 0.3,
+    pressureMax: 2006.2,
+    pressureCount: 1002,
+    temperature: 11.624
+  },
+  {
+    latitude: 17.15763092,
+    longitude: -67.26374817,
+    pressureMin: 0.4,
+    pressureMax: 1998.1,
+    pressureCount: 1014,
+    temperature: 11.795
+  },
+  {
+    latitude: 17.22288703,
+    longitude: -67.30921936,
+    pressureMin: 0.4,
+    pressureMax: 2011.9,
+    pressureCount: 1018,
+    temperature: 11.728
+  },
+  {
+    latitude: 17.26461792,
+    longitude: -67.36209869,
+    pressureMin: 0.3,
+    pressureMax: 1996.9,
+    pressureCount: 1013,
+    temperature: 11.825
+  },
+  {
+    latitude: 17.28343391,
+    longitude: -67.43362427,
+    pressureMin: 0.4,
+    pressureMax: 2017.9,
+    pressureCount: 1022,
+    temperature: 11.758
+  },
+  {
+    latitude: 17.30926895,
+    longitude: -67.48382568,
+    pressureMin: 0.4,
+    pressureMax: 1996.2,
+    pressureCount: 1017,
+    temperature: 11.813
+  },
+  {
+    latitude: 17.33198928,
+    longitude: -67.52412415,
+    pressureMin: 0.4,
+    pressureMax: 2001.1,
+    pressureCount: 1016,
+    temperature: 11.279
+  },
+  {
+    latitude: 17.34464073,
+    longitude: -67.55323028,
+    pressureMin: 0.4,
+    pressureMax: 1998.0,
+    pressureCount: 1016,
+    temperature: 11.501
+  },
+  {
+    latitude: 17.36059761,
+    longitude: -67.58626556,
+    pressureMin: 0.4,
+    pressureMax: 1992.8,
+    pressureCount: 1011,
+    temperature: 11.729
+  },
+  {
+    latitude: 17.37718582,
+    longitude: -67.63383483,
+    pressureMin: 0.4,
+    pressureMax: 2006.7,
+    pressureCount: 1014,
+    temperature: 11.735
+  },
+  {
+    latitude: 17.40514183,
+    longitude: -67.66533661,
+    pressureMin: 0.3,
+    pressureMax: 2012.4,
+    pressureCount: 1016,
+    temperature: 11.756
+  },
+  {
+    latitude: 17.42603874,
+    longitude: -67.71547699,
+    pressureMin: 0.4,
+    pressureMax: 2005.6,
+    pressureCount: 998,
+    temperature: 11.245
+  }
+];

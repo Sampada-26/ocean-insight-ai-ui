@@ -18,8 +18,30 @@ import {
   Waves,
   Thermometer,
   Droplets,
-  Wind
+  Wind,
+  Globe,
+  Database,
+  CheckCircle,
+  AlertTriangle,
+  Clock,
+  BarChart3
 } from "lucide-react";
+import { 
+  DASHBOARD_METRICS, 
+  REGIONAL_DATA, 
+  SAMPLE_FLOATS, 
+  NOTIFICATIONS, 
+  TREND_DATA,
+  getActiveFloatsCount,
+  getDataQualityPercentage,
+  getRecentAlerts 
+} from "@/data/dashboardData";
+import { 
+  QUICK_STATS, 
+  FEATURED_INSIGHTS, 
+  RECENT_ACTIVITY 
+} from "@/data/overviewData";
+import DataDashboard from "@/components/DataDashboard";
 
 interface OceanData {
   id: string;
@@ -388,14 +410,212 @@ const DashboardPage = () => {
       </div>
 
       <div className="p-6">
-        {/* Alerts */}
+        {/* Main Navigation Tabs */}
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full max-w-lg grid-cols-2 mb-8">
+            <TabsTrigger value="overview" className="flex items-center space-x-2">
+              <Database className="h-4 w-4" />
+              <span>System Overview</span>
+            </TabsTrigger>
+            <TabsTrigger value="visualization" className="flex items-center space-x-2">
+              <BarChart3 className="h-4 w-4" />
+              <span>Data Visualization</span>
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Overview Tab Content */}
+          <TabsContent value="overview" className="space-y-8">
+            {/* FloatChat Statistics Dashboard */}
+            <div className="mb-8">
+              {/* Key Metrics Header */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">FloatChat System Overview</h2>
+                <p className="text-gray-600">Real-time Argo float network status and ocean data insights</p>
+              </div>
+
+          {/* Main Statistics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {QUICK_STATS.map((stat) => (
+              <Card key={stat.id} className="relative overflow-hidden">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                      <div className="flex items-center mt-1">
+                        {stat.trend === 'up' && <TrendingUp className="h-4 w-4 text-green-500 mr-1" />}
+                        {stat.trend === 'down' && <TrendingDown className="h-4 w-4 text-red-500 mr-1" />}
+                        {stat.trend === 'stable' && <Activity className="h-4 w-4 text-gray-500 mr-1" />}
+                        <span className={`text-xs ${
+                          stat.trend === 'up' ? 'text-green-600' : 
+                          stat.trend === 'down' ? 'text-red-600' : 'text-gray-600'
+                        }`}>
+                          {stat.change > 0 ? '+' : ''}{stat.change}%
+                        </span>
+                      </div>
+                    </div>
+                    <div className={`p-2 rounded-full ${
+                      stat.color === 'blue' ? 'bg-blue-100' :
+                      stat.color === 'green' ? 'bg-green-100' :
+                      stat.color === 'orange' ? 'bg-orange-100' :
+                      stat.color === 'purple' ? 'bg-purple-100' : 'bg-gray-100'
+                    }`}>
+                      {stat.icon === 'activity' && <Activity className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                      {stat.icon === 'trending-up' && <TrendingUp className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                      {stat.icon === 'check-circle' && <CheckCircle className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                      {stat.icon === 'globe' && <Globe className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                      {stat.icon === 'alert-triangle' && <AlertTriangle className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                      {stat.icon === 'cpu' && <Database className={`h-5 w-5 ${
+                        stat.color === 'blue' ? 'text-blue-600' :
+                        stat.color === 'green' ? 'text-green-600' :
+                        stat.color === 'orange' ? 'text-orange-600' :
+                        stat.color === 'purple' ? 'text-purple-600' : 'text-gray-600'
+                      }`} />}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Regional Overview */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Globe className="h-5 w-5 text-blue-600" />
+                  <span>Regional Coverage</span>
+                </CardTitle>
+                <CardDescription>Active floats by ocean basin</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {REGIONAL_DATA.slice(0, 4).map((region) => (
+                    <div key={region.region} className="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full ${
+                          region.trend === 'up' ? 'bg-green-500' :
+                          region.trend === 'down' ? 'bg-red-500' : 'bg-gray-400'
+                        }`}></div>
+                        <div>
+                          <p className="font-medium text-sm">{region.region}</p>
+                          <p className="text-xs text-gray-500">{region.floatCount} active floats</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium">{region.avgTemperature}°C</p>
+                        <p className="text-xs text-gray-500">{region.avgSalinity} PSU</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <BarChart3 className="h-5 w-5 text-green-600" />
+                  <span>Recent Activity</span>
+                </CardTitle>
+                <CardDescription>Latest system events and alerts</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {getRecentAlerts(4).map((alert) => (
+                    <div key={alert.id} className="flex items-start space-x-3 p-2 rounded-lg bg-gray-50">
+                      <div className="flex-shrink-0 mt-1">
+                        {alert.type === 'critical' && <AlertTriangle className="h-4 w-4 text-red-500" />}
+                        {alert.type === 'warning' && <AlertTriangle className="h-4 w-4 text-orange-500" />}
+                        {alert.type === 'info' && <CheckCircle className="h-4 w-4 text-blue-500" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">{alert.title}</p>
+                        <p className="text-xs text-gray-500 truncate">{alert.message}</p>
+                        <div className="flex items-center mt-1 space-x-2">
+                          <Clock className="h-3 w-3 text-gray-400" />
+                          <span className="text-xs text-gray-400">
+                            {new Date(alert.timestamp).toLocaleString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Featured Insights */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <TrendingUp className="h-5 w-5 text-purple-600" />
+                <span>Featured Insights</span>
+              </CardTitle>
+              <CardDescription>AI-generated analysis and recommendations</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {FEATURED_INSIGHTS.map((insight) => (
+                  <div key={insight.id} className={`p-4 rounded-lg border-l-4 ${
+                    insight.severity === 'high' ? 'border-red-500 bg-red-50' :
+                    insight.severity === 'medium' ? 'border-orange-500 bg-orange-50' :
+                    'border-blue-500 bg-blue-50'
+                  }`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium text-sm">{insight.title}</h4>
+                      <Badge variant={
+                        insight.severity === 'high' ? 'destructive' :
+                        insight.severity === 'medium' ? 'secondary' : 'default'
+                      } className="text-xs">
+                        {insight.severity}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-gray-600 mb-2">{insight.description}</p>
+                    <p className="text-xs text-gray-500">
+                      <strong>Region:</strong> {insight.region}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* System Status Alert */}
         <div className="mb-4">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
             <div className="flex items-center space-x-2">
-              <Activity className="h-4 w-4 text-blue-600" />
-              <p className="text-sm text-blue-800">
-                <strong>Live Update:</strong> Bay of Bengal showing increased wave activity • 
-                Red Sea temperature rising above seasonal average
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <p className="text-sm text-green-800">
+                <strong>System Status:</strong> All systems operational • {DASHBOARD_METRICS.activeFloats.toLocaleString()} floats transmitting • 
+                Last update: {DASHBOARD_METRICS.lastUpdate}
               </p>
             </div>
           </div>
@@ -451,16 +671,23 @@ const DashboardPage = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="all" className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {filteredData.map((item) => (
-                <OceanCard
-                  key={item.id}
-                  data={item}
-                  onToggleWatchlist={toggleWatchlist}
-                />
-              ))}
-            </div>
+              <TabsContent value="all" className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredData.map((item) => (
+                    <OceanCard
+                      key={item.id}
+                      data={item}
+                      onToggleWatchlist={toggleWatchlist}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
+          {/* Data Visualization Tab Content */}
+          <TabsContent value="visualization">
+            <DataDashboard />
           </TabsContent>
         </Tabs>
       </div>
